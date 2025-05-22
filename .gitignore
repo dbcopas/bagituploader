@@ -1,0 +1,15 @@
+*.log
+__pycache__/
+uploaded_files.json
+*.pyc
+*.pyo
+*.pyd
+.venv/
+.vscode/
+.idea/
+downloaded/
+*.DS_Store
+*.env
+*.env.*
+*.local
+*.local.*
