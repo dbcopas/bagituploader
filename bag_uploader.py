@@ -13,6 +13,29 @@ from azure.core.exceptions import AzureError
 from tqdm import tqdm
 import requests
 
+
+"""This script uploads files from a local directory to Azure Data Lake Storage (ADLS) Gen2.
+It computes MD5 hashes for verification, handles retries, and logs progress.        
+It supports graceful shutdown on interrupt signals and uses multithreading for parallel uploads.
+
+invoke with:
+python bag_uploader.py <local_directory> <storage_account_name> <filesystem_name> [--threads <num_threads>]
+
+where:
+- <local_directory> is the path to the local directory to upload.
+- <storage_account_name> is the name of the Azure Storage account.
+- <filesystem_name> is the name of the ADLS Gen2 filesystem (container).
+- [--threads <num_threads>] is an optional argument to specify the number of parallel upload threads (default is 8).
+It requires the Azure SDK for Python and tqdm for progress bars.
+This script is designed to be run in a Python environment with the necessary Azure SDK packages installed.
+It will log its operations to 'upload.log' and 'quick.log', and maintain a record of uploaded files in 'uploaded_files.json'.
+This script is intended for use in environments where you need to upload large datasets to Azure Data Lake Storage efficiently,
+and it includes features for error handling, progress tracking, and MD5 verification to ensure data integrity.
+
+This script is provided as-is and should be tested in a safe environment before use in production.
+"""
+
+
 # Set up logging
 logging.basicConfig(filename='upload.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 quicklog = logging.getLogger("quick")
