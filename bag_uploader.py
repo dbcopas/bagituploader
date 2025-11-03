@@ -8,6 +8,7 @@ import signal
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from azure.identity import DefaultAzureCredential
+from azure.identity import AzureCliCredential
 from azure.storage.filedatalake import DataLakeServiceClient
 from azure.core.exceptions import AzureError
 from tqdm import tqdm
@@ -225,7 +226,8 @@ def upload_directory(local_path, filesystem_client, remote_path="", max_workers=
 def main(local_dir, storage_account_name, filesystem_name, max_workers):
     try:
         logging.info(f"Initializing DataLakeServiceClient for account: {storage_account_name}")
-        credential = DefaultAzureCredential()
+        #credential = DefaultAzureCredential()
+        credential = AzureCliCredential()
         service_client = DataLakeServiceClient(account_url=f"https://{storage_account_name}.dfs.core.windows.net", credential=credential)
         filesystem_client = service_client.get_file_system_client(filesystem_name)
         upload_directory(local_dir, filesystem_client, max_workers=max_workers)
